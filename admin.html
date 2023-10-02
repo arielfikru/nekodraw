@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Admin Settings</h2>
+    <form id="adminForm">
+        <div class="form-group">
+            <label for="apiUrl">API URL:</label>
+            <input type="text" class="form-control" id="apiUrl" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update URL</button>
+    </form>
+    <div class="mt-4" id="message"></div>
+</div>
+
+<script>
+	document.getElementById('adminForm').addEventListener('submit', function(e) {
+		e.preventDefault();
+
+		const apiUrl = document.getElementById('apiUrl').value;
+
+		fetch('/update-url', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				url: apiUrl
+			})
+		})
+		.then(response => response.json())
+		.then(data => {
+			document.getElementById('message').textContent = data.message;
+		})
+		.catch(error => {
+			console.error('Error:', error);
+		});
+	});
+</script
+</body>
+</html>
